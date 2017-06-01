@@ -1,0 +1,16 @@
+# Details of a Jenkins Config
+---
+linux: TRUE
+windows: FALSE
+checkout: TRUE
+validate: TRUE
+compile: TRUE
+pkg: TRUE
+install: TRUE
+test: TRUE
+approve: FALSE
+deploy: TRUE
+emailext: TRUE
+schedule: TRUE
+phabricator: FALSE
+
