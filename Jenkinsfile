@@ -1,5 +1,6 @@
 node { 
 	checkout scm
+	checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/kannan0501/GraHW.git']]]) 
 	//env.PATH ="${tool 'gradle'}/bin:${env.PATH}"
 	stash excludes: 'target/', includes: '**', name: 'source'
 	//emailext attachLog: true,body: 'Test', compressLog: true, subject: 'Test jenkins Pipelines', to: 'sgandra@altimetrik.com,snachiappan@altimetrik.com' 
