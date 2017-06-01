@@ -3,17 +3,17 @@ node {
 	//env.PATH ="${tool 'gradle'}/bin:${env.PATH}"
 	stash excludes: 'target/', includes: '**', name: 'source'
 	//emailext attachLog: true,body: 'Test', compressLog: true, subject: 'Test jenkins Pipelines', to: 'sgandra@altimetrik.com,snachiappan@altimetrik.com' 
-	properties([pipelineTriggers([cron('0 10 * * *')])])
-	stage('validate') {
-		sh 'gradle validate'
+	//properties([pipelineTriggers([cron('0 10 * * *')])])
+	stage('clean') {
+		sh 'gradle clean'
 	} 
-	stage('compile') {
-		sh 'gradle compile'
+	stage('build') {
+		sh 'gradle build'
 	} 
-	stage('package') {
-		 sh 'gradle clean package -DskipTests'
+	stage('test') {
+		 sh 'gradle test'
 	}
-	stage('install') {
+	/*stage('install') {
 		sh 'gradle clean install'
 	} 
 	stage('test') {
@@ -23,7 +23,7 @@ node {
 			//sh 'mvn sonar:sonar'
 			} 
 	} 
-	/*stage('deploy') {
+	stage('deploy') {
 		unstash 'source'
 		sh 'cp target/*.jar /opt/deploy'
 	}*/
