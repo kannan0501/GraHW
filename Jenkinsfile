@@ -1,30 +1,30 @@
 node { 
 	checkout scm
-	env.PATH ="${tool 'Maven3'}/bin:${env.PATH}"
+	env.PATH ="${tool 'gradle'}/bin:${env.PATH}"
 	stash excludes: 'target/', includes: '**', name: 'source'
 	emailext attachLog: true,body: 'Test', compressLog: true, subject: 'Test jenkins Pipelines', to: 'sgandra@altimetrik.com,snachiappan@altimetrik.com' 
 	properties([pipelineTriggers([cron('0 10 * * *')])])
 	stage('validate') {
-		sh 'mvn validate'
+		sh 'gradle validate'
 	} 
 	stage('compile') {
-		sh 'mvn compile'
+		sh 'gradle compile'
 	} 
 	stage('package') {
-		 sh 'mvn clean package -DskipTests'
+		 sh 'gradle clean package -DskipTests'
 	}
 	stage('install') {
-		sh 'mvn clean install'
+		sh 'gradle clean install'
 	} 
 	stage('test') {
 		parallel 'integration': {
-			sh 'mvn clean verify'
+			sh 'gradle clean verify'
 		}, 'quality': {
 			//sh 'mvn sonar:sonar'
 			} 
 	} 
-	stage('deploy') {
+	/*stage('deploy') {
 		unstash 'source'
 		sh 'cp target/*.jar /opt/deploy'
-	}
+	}*/
 }
